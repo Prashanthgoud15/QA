@@ -214,12 +214,28 @@
             padding: 2rem;
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
 
         .card:hover {
             transform: scale(1.05) rotate(2deg);
             box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
             border-color: #00d4ff;
+        }
+
+        .card::after {
+            content: '🔗 Click to Learn More';
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.8rem;
+            color: #00d4ff;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::after {
+            opacity: 1;
         }
 
         .card h4 {
@@ -274,6 +290,14 @@
             margin: 2rem 0;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .case-study-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 50px rgba(255, 0, 110, 0.4);
+            border-color: #ff006e;
         }
 
         .case-study-box::before {
@@ -283,6 +307,22 @@
             right: 20px;
             font-size: 4rem;
             opacity: 0.2;
+        }
+
+        .case-study-box::after {
+            content: '🔗 Click to Read Full Case Study';
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 0.9rem;
+            color: #ff006e;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-weight: bold;
+        }
+
+        .case-study-box:hover::after {
+            opacity: 1;
         }
 
         .case-study-box h3 {
@@ -426,28 +466,28 @@
             <h2>⚡ Types of Quantum Sensors</h2>
             
             <div class="cards-grid">
-                <div class="card">
+                <div class="card" onclick="window.open('https://en.wikipedia.org/wiki/SQUID', '_blank')">
                     <h4>🧲 SQUID</h4>
                     <p><strong>Superconducting Quantum Interference Device</strong></p>
                     <p>Detects ultra-weak magnetic fields (10⁻¹⁵ Tesla) for brain (MEG) and heart (MCG) imaging.</p>
                     <p style="color: #ff006e; margin-top: 1rem;"><strong>Limitation:</strong> Requires expensive cryogenic cooling</p>
                 </div>
 
-                <div class="card">
+                <div class="card" onclick="window.open('https://www.nottingham.ac.uk/research/groups/spmic/research/meg-and-opm.aspx', '_blank')">
                     <h4>💎 OPM</h4>
                     <p><strong>Optically Pumped Magnetometers</strong></p>
                     <p>Room-temperature quantum sensors using laser-pumped atoms for portable, wearable MEG systems.</p>
                     <p style="color: #00ff88; margin-top: 1rem;"><strong>Advantage:</strong> Patient-friendly & portable</p>
                 </div>
 
-                <div class="card">
+                <div class="card" onclick="window.open('https://en.wikipedia.org/wiki/Nitrogen-vacancy_center', '_blank')">
                     <h4>💠 NV Centers</h4>
                     <p><strong>Nitrogen-Vacancy in Diamond</strong></p>
                     <p>Atomic-scale sensors enabling single-cell magnetic imaging and real-time neural tracking at nanometer resolution.</p>
                     <p style="color: #00ff88; margin-top: 1rem;"><strong>Advantage:</strong> Nanometer precision</p>
                 </div>
 
-                <div class="card">
+                <div class="card" onclick="window.open('https://en.wikipedia.org/wiki/Quantum_dot', '_blank')">
                     <h4>🔷 Quantum Dots</h4>
                     <p><strong>Semiconductor Nanocrystals</strong></p>
                     <p>Providing superior fluorescence imaging for cancer detection and long-term cellular tracking.</p>
@@ -460,7 +500,7 @@
         <div class="section">
             <h2>🏆 Real-World Case Study</h2>
             
-            <div class="case-study-box">
+            <div class="case-study-box" onclick="window.open('https://quspin.com/neuro-1-an-integrated-sensor-system-for-opm-meg/', '_blank')">
                 <h3>QuSpin's Portable MEG System</h3>
                 <p><strong>Company:</strong> QuSpin Inc., Colorado, USA (2017-Present)</p>
                 
@@ -650,11 +690,24 @@
         // Initialize particles
         createParticles();
 
-        // Add hover effect sound (optional - can be enhanced with actual sounds)
+        // Add click functionality to cards
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('mouseenter', () => {
                 card.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
             });
+            
+            // Ensure click events work
+            card.addEventListener('click', function() {
+                const onclick = this.getAttribute('onclick');
+                if (onclick) {
+                    eval(onclick);
+                }
+            });
+        });
+
+        // Add click functionality to case study box
+        document.querySelector('.case-study-box').addEventListener('click', function() {
+            window.open('https://en.wikipedia.org/wiki/Magnetoencephalography', '_blank');
         });
     </script>
 </body>
